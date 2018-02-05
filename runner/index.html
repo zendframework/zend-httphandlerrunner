@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Execute PSR-15 RequestHandlerInterface instances and emit responses they generate.">  
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>Request Handler Runner - zend-httphandlerrunner</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/styles-482aa2add1.css">
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+                <a class="logo-link" href="https://framework.zend.com/" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../img/zf-logo-mark.svg" height="28" alt="Zend Framework" /></a>
+                <a href="..">zend-httphandlerrunner</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                
+                    <li >
+                        <a href="..">zend-httphandlerrunner</a>
+                    </li>
+                
+                
+                
+                
+                
+                    <li >
+                        <a href="../intro/">Introduction</a>
+                    </li>
+                
+                
+                
+                
+                
+                    <li >
+                        <a href="../usage/">Usage</a>
+                    </li>
+                
+                
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+
+<li class="active">
+    <a href="./">Request Handler Runner</a>
+</li>
+
+
+                        
+                            
+
+<li >
+    <a href="../emitters/">Emitters</a>
+</li>
+
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-httphandlerrunner/">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div id="page-top" class="container docs">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#the-request-handler-runner">The Request Handler Runner</a></li>
+        
+            <li><a href="#server-request-factory">Server request factory</a></li>
+        
+            <li><a href="#server-request-error-response-generator">Server request error response generator</a></li>
+        
+            <li><a href="#request-handlers">Request handlers</a></li>
+        
+    
+    </ul>
+
+    
+    <ul class="pager hidden-print">
+      <li class="previous">
+        <a rel="prev" href="../usage/"><i class="fa fa-arrow-left"></i> Previous</a>
+      </li>
+      <li class="next">
+        <a rel="next" href="../emitters/">Next <i class="fa fa-arrow-right"></i></a>
+      </li>
+    </ul>
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="..">zend-httphandlerrunner</a></li>
+  
+    
+      
+        <li>Reference</li>
+      
+    
+  
+  <li class="active">Request Handler Runner</li>
+</ol>
+
+<h1 id="the-request-handler-runner">The Request Handler Runner</h1>
+<p><code>Zend\HttpHandlerRunner\RequestHandlerRunner</code> can be used to <em>run</em> a
+<a href="https://www.php-fig.org/psr/psr-15">PSR-15</a> <code>RequestHandlerInterface</code> instance.
+By this, we mean:</p>
+<ul>
+<li>Marshal a server request instance.</li>
+<li>Handle exceptions due to marshaling the server request instance.</li>
+<li>Pass the request to the composed request handler.</li>
+<li>Pass the response generated by the request handler to the composed <a href="../emitters/">emitter</a></li>
+</ul>
+<p>The runner takes four constructor arguments, in the following order:</p>
+<ul>
+<li>A <code>Psr\Http\Server\RequestHandlerInterface</code> instance.</li>
+<li>A <code>Zend\HttpHandlerRunner\Emitter\EmitterInterface</code> instance.</li>
+<li>A PHP callable to generate a <code>Psr\Http\Message\ServerRequestInterface</code> instance.</li>
+<li>A PHP callable that can generate a <code>Psr\Http\Message\ResponseInterface</code>
+  instance given a PHP <code>Throwable</code> generated by the server request factory
+  from the third argument.</li>
+</ul>
+<p>Once constructed, you may call the method <code>run()</code>:</p>
+<pre class="codehilite"><code class="language-php">$runner-&gt;run();</code></pre>
+
+<h2 id="server-request-factory">Server request factory</h2>
+<p>The <code>$serverRequestFactory</code> argument to the constructor may be any PHP callable
+that accepts no arguments (or all optional arguments), and which returns a
+<a href="https://www.php-fig.org/psr/psr-7">PSR-7</a> <code>ServerRequestInterface</code> instance.</p>
+<p>As an example, using <a href="https://docs.zendframework.com/zend-diactoros">zend-diactoros</a>:</p>
+<pre class="codehilite"><code class="language-php">use Zend\Diactoros\ServerRequestFactory;
+
+$serverRequestFactory = [ServerRequestFactory::class, 'fromGlobals'];</code></pre>
+
+<p>Alternately, a <a href="https://github.com/php-fig/fig-standards/tree/a6abdeb44a060d80925c95714f39854c510e879f/proposed/http-factory">PSR-17 (proposed specification for HTTP message
+factories)</a> factory may be used:</p>
+<pre class="codehilite"><code class="language-php">use HttpInterop\Implementation\ServerRequestFactory;
+
+$serverRequestFactory = function () use ($_SERVER, $factory) {
+    return $factory-&gt;createServerRequestFromArray($_SERVER);
+};</code></pre>
+
+<h2 id="server-request-error-response-generator">Server request error response generator</h2>
+<p>In rare cases, the server request factory may raise a PHP <code>Throwable</code> or
+<code>Exception</code>. In those cases, the runner still needs to generate a response to
+emit.</p>
+<p>The server request error response generator argument to the
+<code>RequestHandlerRunner</code> constructor may be any PHP callable that accepts a PHP
+<code>Throwable</code> argument, and which returns a PSR-7 <code>ResponseInterface</code> instance.</p>
+<p>As an example, <a href="https://docs.zendframework.com/zend-stratigility/">zend-stratigility</a>
+provides the class <code>Zend\Stratigility\Middleware\ErrorResponseGenerator</code>, which
+is typically used with its <code>ErrorHandler</code> to generate a response. It can be
+re-purposed if we curry in empty server request and response instances as
+follows:</p>
+<pre class="codehilite"><code class="language-php">use Throwable;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\ServerRequest;
+use Zend\Stratigility\Middleware\ErrorResponseGenerator;
+
+$errorResponseGenerator = function (Throwable $e) {
+    $generator = new ErrorResponseGenerator();
+    return $generator($e, new ServerRequest(), new Response());
+};</code></pre>
+
+<h2 id="request-handlers">Request handlers</h2>
+<p>Request handlers MUST implement <code>Psr\Http\Server\RequestHandlerInterface</code>.
+Additionally, for best results, they MUST provide their own error and exception
+handling, to ensure that a response is returned and the runner is able to emit a
+response.</p>
+
+<hr />
+
+
+<nav>
+  <ul class="pager hidden-print">
+    <li class="previous">
+      <a rel="prev" href="../usage/"><i class="fa fa-arrow-left"></i> Previous</a>
+    </li>
+    <li class="next">
+      <a rel="next" href="../emitters/">Next <i class="fa fa-arrow-right"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <div id="footerwrap">
+    <div class="container">
+        <div class="row site-map">
+            <div class="col-lg-3">
+              <p>
+                <strong>Zend Framework</strong><br />
+                <a href="https://framework.zend.com/">framework.zend.com</a><br />
+                <a href="https://docs.zendframework.com">docs.zendframework.com</a><br />
+                <a href="https://packages.zendframework.com">packages.zendframework.com</a><br />
+                <a href="https://apigility.org">apigility.org</a><br />
+              </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <a class="back-to-top" href="#page-top"><i class="fa fa-chevron-circle-up fa-4" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="spacing"></div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h4>Copyright</h4>
+                <div class="hline-w"></div>
+
+                <p>&copy; 2006-2017 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <h4>Contacts</h4>
+                <div class="hline-w"></div>
+                <p>
+                    <a href="https://discourse.zendframework.com" class="btn-social btn-outline" alt="Forum" title="Forum"><i class="fa fa-comments"></i></a>
+                    <a href="https://zendframework-slack.herokuapp.com" class="btn-social btn-outline" alt="Slack" title="Slack"><i class="fa fa-slack"></i></a>
+                    <a href="https://github.com/zendframework" class="btn-social btn-outline" alt="Github" title="Github"><i class="fa fa-github"></i></a>
+                    <a href="https://twitter.com/zfdevteam" class="btn-social btn-outline" alt="Twitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/scripts-0b6185f4a5.js"></script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../search/require.js"></script>
+        <script src="../search/search.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="https://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../img/zf-logo-mark.svg" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+</body>
+
+
+</html>
