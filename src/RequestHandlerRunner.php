@@ -59,6 +59,11 @@ class RequestHandlerRunner
      */
     private $serverRequestFactory;
 
+    /**
+     * @var callable[]
+     */
+    protected $listeners = [];
+
     public function __construct(
         RequestHandlerInterface $handler,
         Emitter\EmitterInterface $emitter,
@@ -97,9 +102,43 @@ class RequestHandlerRunner
         $this->emitter->emit($response);
     }
 
-    private function emitMarshalServerRequestException(Throwable $exception) : void
+    /**
+     * Attach an error listener.
+     *
+     * Each listener receives the following two arguments:
+     *
+     * - Throwable $error
+     * - ResponseInterface $response
+     *
+     * These instances are all immutable, and the return values of
+     * listeners are ignored; use listeners for reporting purposes
+     * only.
+     */
+    public function attachListener(callable $listener) : void
+    {
+        if (in_array($listener, $this->listeners, true)) {
+            return;
+        }
+
+        $this->listeners[] = $listener;
+    }
+
+    /**
+     * Trigger all error listeners.
+     */
+    private function triggerListeners(
+        \Throwable $error,
+        ResponseInterface $response
+    ) : void {
+        foreach ($this->listeners as $listener) {
+            $listener($error, $response);
+        }
+    }
+
+    public function emitMarshalServerRequestException(Throwable $exception) : void
     {
         $response = ($this->serverRequestErrorResponseGenerator)($exception);
+        $this->triggerListeners($exception, $response);
         $this->emitter->emit($response);
     }
 }
