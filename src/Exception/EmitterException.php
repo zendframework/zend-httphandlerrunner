@@ -13,9 +13,15 @@ use RuntimeException;
 
 class EmitterException extends RuntimeException implements ExceptionInterface
 {
-    public static function forHeadersSent() : self
+    public static function forHeadersSent(string $file, int $line) : self
     {
-        return new self('Unable to emit response; headers already sent');
+        return new self(
+            sprintf(
+                'Unable to emit response; headers already sent, output started at %s:%d',
+                $file,
+                $line
+            )
+        );
     }
 
     public static function forOutputSent() : self
