@@ -58,6 +58,24 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
         $this->assertSame('it works', ob_get_clean());
     }
 
+    public function testAssertNoPreviousOutput()
+    {
+        $stream = new CallbackStream(function () {
+            return 'it works';
+        });
+        $response = (new Response())
+            ->withStatus(200)
+            ->withBody($stream);
+        ob_start();
+        echo 'Unexpected Output';
+        try {
+            $this->emitter->emit($response);
+        } catch (Exception $e) {
+            $this->assertTrue($e instanceof EmitterException);
+            $this->assertEquals('',$e->getMessage());
+        }
+    }
+    
     public function testDoesNotInjectContentLengthHeaderIfStreamSizeIsUnknown()
     {
         $stream = $this->prophesize(StreamInterface::class);
