@@ -73,6 +73,8 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
         } catch (Exception $e) {
             $this->assertTrue($e instanceof EmitterException);
             $this->assertEquals('',$e->getMessage());
+        } finally {
+            ob_get_clean();
         }
     }
     
