@@ -71,6 +71,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
         try {
             $this->emitter->emit($response);
         } catch (\Throwable $e) {
+            var_dump($e,$e->getMessage());
             $this->assertTrue($e instanceof EmitterException);
             $this->assertEquals($e->getMessage(), sprintf(
                 'Unable to emit response; headers already sent, output started at %s:%d',
