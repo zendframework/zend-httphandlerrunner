@@ -67,11 +67,11 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
             ->withStatus(200)
             ->withBody($stream);
         ob_start();
-        echo 'Unexpected Output';
+        echo 'Unexpected Output'; 
         try {
             $this->emitter->emit($response);
-        } catch (Exception $e) {
-            $this->assertTrue($e instanceof EmitterException);
+        } catch (\Throwable $e) {
+            $this->assertTrue($e instanceof \EmitterException);
             $this->assertEquals('',$e->getMessage());
         } finally {
             ob_get_clean();
