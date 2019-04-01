@@ -72,11 +72,17 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
             $this->emitter->emit($response);
         } catch (\Throwable $e) {
             //$this->assertTrue($e instanceof Zend\HttpHandlerRunner\Exception\EmitterException);
+            $this->assertEquals(
+                'Output has been emitted previously; cannot emit response',
+                $e->getMessage()
+            );
+            /*
             $this->assertEquals($e->getMessage(),sprintf(
                 'Unable to emit response; headers already sent, output started at %s:%d',
                  __FILE__,
                  __LINE__ - 5
             ));
+            */
         } finally {
             ob_end_clean();
         }
