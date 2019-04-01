@@ -31,8 +31,10 @@ trait SapiEmitterTrait
      */
     private function assertNoPreviousOutput()
     {
-        if (headers_sent()) {
-            throw EmitterException::forHeadersSent();
+        $file = null;
+        $line = null;
+        if (headers_sent($file, $line)) {
+            throw EmitterException::forHeadersSent($file, $line);
         }
 
         if (ob_get_level() > 0 && ob_get_length() > 0) {
