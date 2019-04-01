@@ -67,7 +67,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
             ->withStatus(200)
             ->withBody($stream);
         $this->expectException('Zend\HttpHandlerRunner\Exception\EmitterException');
-        $this->expectExceptionMessage('Unable to emit response; headers already sent');
+        //$this->expectExceptionMessage('Unable to emit response; headers already sent');
         $this->expectExceptionMessage(sprintf(
             'output started at %s:%d',
              __FILE__,
