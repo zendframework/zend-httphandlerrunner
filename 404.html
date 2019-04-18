@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Execute PSR-15 RequestHandlerInterface instances and emit responses they generate.">  
-    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="shortcut icon" href="//img/favicon.ico">
 
-    <title>Request Handler Runner - zend-httphandlerrunner - Zend Framework Docs</title>
+    <title>zend-httphandlerrunner - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../css/styles-f3b53f5ceb.css">
+    <link rel="stylesheet" href="//css/styles-f3b53f5ceb.css">
 </head>
 <body id="page-top">
 
@@ -31,7 +31,7 @@
             
             <span class="navbar-brand">
                 <a class="logo-link" href="https://framework.zend.com/" data-tooltip data-placement="bottom" title="Go to the ZF homepage">
-                    <img src="../img/zend-framework-logo.svg" height="28" alt="Zend Framework">
+                    <img src="//img/zend-framework-logo.svg" height="28" alt="Zend Framework">
                 </a>
             </span>
         </div>
@@ -66,7 +66,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">zend-httphandlerrunner</a>
+            <a href="/.">zend-httphandlerrunner</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -75,19 +75,19 @@
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href=".." class="subnavigation__link">zend-httphandlerrunner</a>
+                        <a href="/." class="subnavigation__link">zend-httphandlerrunner</a>
                     </li>
                 
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../intro/" class="subnavigation__link">Introduction</a>
+                        <a href="/intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../usage/" class="subnavigation__link">Usage</a>
+                        <a href="/usage/" class="subnavigation__link">Usage</a>
                     </li>
                 
             
@@ -97,14 +97,14 @@
                         <ul class="subnavigation__list">
                             
                                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Request Handler Runner</a>
+    <li class="subnavigation__list-item ">
+        <a href="/runner/" class="subnavigation__link">Request Handler Runner</a>
     </li>
 
                             
                                 
     <li class="subnavigation__list-item ">
-        <a href="../emitters/" class="subnavigation__link">Emitters</a>
+        <a href="/emitters/" class="subnavigation__link">Emitters</a>
     </li>
 
                             
@@ -181,161 +181,18 @@
             <div class="col-md-9 col-xs-12 content" role="main">
             <!-- content:begin -->
                 
-                    <ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
-    <li><a href="https://framework.zend.com/">Home</a></li>
 
-    
-        <li><a href="https://docs.zendframework.com/">Documentation</a></li>
+<h1 class="content__title">404</h1>
+<blockquote>
+    <h3>Something went wrong!</h3>
+    <p>
+        We're sorry, but the page you are looking for does not exist.
+    </p>
+</blockquote>
 
-        
-            <li><a href="..">zend-httphandlerrunner</a></li>
-
-            
-                
-                    <li>Reference</li>
-                
-            
-
-            <li class="active">Request Handler Runner</li>
-        
-    
-</ol>
+<a href="/" class="btn btn-default" role="button">Go to homepage</a>
 
 
-    
-        <h2 class="chapter__headline">Reference</h2>
-    
-
-    
-    
-
-    
-    
-        <div class="toc">
-            <h6 class="toc__headline">In This Article</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#server-request-factory" class="toc__link">Server request factory</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#server-request-error-response-generator" class="toc__link">Server request error response generator</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#request-handlers" class="toc__link">Request handlers</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
-
-
-    <h1 id="the-request-handler-runner">The Request Handler Runner</h1>
-<p><code>Zend\HttpHandlerRunner\RequestHandlerRunner</code> can be used to <em>run</em> a
-<a href="https://www.php-fig.org/psr/psr-15">PSR-15</a> <code>RequestHandlerInterface</code> instance.
-By this, we mean:</p>
-<ul>
-<li>Marshal a server request instance.</li>
-<li>Handle exceptions due to marshaling the server request instance.</li>
-<li>Pass the request to the composed request handler.</li>
-<li>Pass the response generated by the request handler to the composed <a href="../emitters/">emitter</a></li>
-</ul>
-<p>The runner takes four constructor arguments, in the following order:</p>
-<ul>
-<li>A <code>Psr\Http\Server\RequestHandlerInterface</code> instance.</li>
-<li>A <code>Zend\HttpHandlerRunner\Emitter\EmitterInterface</code> instance.</li>
-<li>A PHP callable to generate a <code>Psr\Http\Message\ServerRequestInterface</code> instance.</li>
-<li>A PHP callable that can generate a <code>Psr\Http\Message\ResponseInterface</code>
-  instance given a PHP <code>Throwable</code> generated by the server request factory
-  from the third argument.</li>
-</ul>
-<p>Once constructed, you may call the method <code>run()</code>:</p>
-<pre class="codehilite"><code class="language-php">$runner-&gt;run();</code></pre>
-
-<h2 id="server-request-factory">Server request factory</h2>
-<p>The <code>$serverRequestFactory</code> argument to the constructor may be any PHP callable
-that accepts no arguments (or all optional arguments), and which returns a
-<a href="https://www.php-fig.org/psr/psr-7">PSR-7</a> <code>ServerRequestInterface</code> instance.</p>
-<p>As an example, using <a href="https://docs.zendframework.com/zend-diactoros">zend-diactoros</a>:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Diactoros\ServerRequestFactory;
-
-$serverRequestFactory = [ServerRequestFactory::class, 'fromGlobals'];</code></pre>
-
-<p>Alternately, a <a href="https://github.com/php-fig/fig-standards/tree/a6abdeb44a060d80925c95714f39854c510e879f/proposed/http-factory">PSR-17 (proposed specification for HTTP message
-factories)</a> factory may be used:</p>
-<pre class="codehilite"><code class="language-php">use HttpInterop\Implementation\ServerRequestFactory;
-
-$serverRequestFactory = function () use ($_SERVER, $factory) {
-    return $factory-&gt;createServerRequestFromArray($_SERVER);
-};</code></pre>
-
-<h2 id="server-request-error-response-generator">Server request error response generator</h2>
-<p>In rare cases, the server request factory may raise a PHP <code>Throwable</code> or
-<code>Exception</code>. In those cases, the runner still needs to generate a response to
-emit.</p>
-<p>The server request error response generator argument to the
-<code>RequestHandlerRunner</code> constructor may be any PHP callable that accepts a PHP
-<code>Throwable</code> argument, and which returns a PSR-7 <code>ResponseInterface</code> instance.</p>
-<p>As an example, <a href="https://docs.zendframework.com/zend-stratigility/">zend-stratigility</a>
-provides the class <code>Zend\Stratigility\Middleware\ErrorResponseGenerator</code>, which
-is typically used with its <code>ErrorHandler</code> to generate a response. It can be
-re-purposed if we curry in empty server request and response instances as
-follows:</p>
-<pre class="codehilite"><code class="language-php">use Throwable;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequest;
-use Zend\Stratigility\Middleware\ErrorResponseGenerator;
-
-$errorResponseGenerator = function (Throwable $e) {
-    $generator = new ErrorResponseGenerator();
-    return $generator($e, new ServerRequest(), new Response());
-};</code></pre>
-
-<h2 id="request-handlers">Request handlers</h2>
-<p>Request handlers MUST implement <code>Psr\Http\Server\RequestHandlerInterface</code>.
-Additionally, for best results, they MUST provide their own error and exception
-handling, to ensure that a response is returned and the runner is able to emit a
-response.</p>
-
-
-
-    <nav>
-    <ul class="page-nav hidden-print">
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../usage/">
-                    <i class="fa fa-chevron-left"></i> Previous
-                </a>
-            
-        </li>
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../emitters/">
-                    Next <i class="fa fa-chevron-right"></i>
-                </a>
-            
-        </li>
-    </ul>
-</nav>
-
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-httphandlerrunner/edit/master/docs/book/runner.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
-
-                
             <!-- content:end -->
             </div>
             <div class="col-md-3 col-xs-12 sidebar">
@@ -351,7 +208,7 @@ response.</p>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">zend-httphandlerrunner</a>
+            <a href="/.">zend-httphandlerrunner</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -360,19 +217,19 @@ response.</p>
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href=".." class="subnavigation__link">zend-httphandlerrunner</a>
+                        <a href="/." class="subnavigation__link">zend-httphandlerrunner</a>
                     </li>
                 
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../intro/" class="subnavigation__link">Introduction</a>
+                        <a href="/intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../usage/" class="subnavigation__link">Usage</a>
+                        <a href="/usage/" class="subnavigation__link">Usage</a>
                     </li>
                 
             
@@ -382,14 +239,14 @@ response.</p>
                         <ul class="subnavigation__list">
                             
                                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Request Handler Runner</a>
+    <li class="subnavigation__list-item ">
+        <a href="/runner/" class="subnavigation__link">Request Handler Runner</a>
     </li>
 
                             
                                 
     <li class="subnavigation__list-item ">
-        <a href="../emitters/" class="subnavigation__link">Emitters</a>
+        <a href="/emitters/" class="subnavigation__link">Emitters</a>
     </li>
 
                             
@@ -468,11 +325,11 @@ response.</p>
 </footer>
 
     <script>
-        var base_url = '..',
+        var base_url = '/',
             siteName = 'zend-httphandlerrunner';
     </script>
-    <script src="../js/scripts-8d7ae56abf.js"></script>
-        <script src="../search/main.js"></script>
+    <script src="//js/scripts-8d7ae56abf.js"></script>
+        <script src="/search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
