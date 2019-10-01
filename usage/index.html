@@ -252,8 +252,7 @@
     <h1 id="installation-and-usage">Installation and Usage</h1>
 <p>To install this package, run the following <a href="https://getcomposer.org">composer</a>
 command:</p>
-<pre class="codehilite"><code class="language-bash">$ composer require zendframework/zend-httphandlerrunner</code></pre>
-
+<p> <pre class=codehilite><code class=language-bash>$ composer require zendframework/zend-httphandlerrunner</code></pre></p>
 <p>The package provides both <a href="../emitters/">emitters</a> and the <a href="../runner/">request handler
 runner</a>, and these are generally used within the bootstrap of your
 application.</p>
@@ -264,7 +263,7 @@ factory, the server request error response generator, potentially, the runner
 itself.</p>
 <p>The example below instantiates the runner manually by pulling its dependencies
 from a configured <a href="https://www.php-fig.org/psr/psr-11">PSR-11</a> container.</p>
-<pre class="codehilite"><code class="language-php">use Zend\HttpHandlerRunner\Emitter\EmitterStack;
+<p> <pre class=codehilite><code class=language-php>use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
 $container = require 'config/container.php';
@@ -275,7 +274,7 @@ $runner = new RequestHandlerRunner(
     $container-&gt;get('ServerRequestFactory'),
     $container-&gt;get('ServerRequestErrorResponseGenerator')
 );
-$runner-&gt;run();</code></pre>
+$runner-&gt;run();</code></pre></p>
 
 
 
@@ -309,7 +308,7 @@ $runner-&gt;run();</code></pre>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-httphandlerrunner/edit/master/docs/usage.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-httphandlerrunner/edit/master/docs/book/usage.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>
