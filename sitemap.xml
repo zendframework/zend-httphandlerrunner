@@ -2,27 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://docs.zendframework.com/zend-httphandlerrunner/</loc>
-     <lastmod>2019-10-25</lastmod>
+     <lastmod>2019-11-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.zendframework.com/zend-httphandlerrunner/intro/</loc>
-     <lastmod>2019-10-25</lastmod>
+     <lastmod>2019-11-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.zendframework.com/zend-httphandlerrunner/usage/</loc>
-     <lastmod>2019-10-25</lastmod>
+     <lastmod>2019-11-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.zendframework.com/zend-httphandlerrunner/runner/</loc>
-     <lastmod>2019-10-25</lastmod>
+     <lastmod>2019-11-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.zendframework.com/zend-httphandlerrunner/emitters/</loc>
-     <lastmod>2019-10-25</lastmod>
+     <lastmod>2019-11-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
