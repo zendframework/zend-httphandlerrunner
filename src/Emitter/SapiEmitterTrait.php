@@ -38,6 +38,10 @@ trait SapiEmitterTrait
         if (ob_get_level() > 0 && ob_get_length() > 0) {
             throw EmitterException::forOutputSent();
         }
+
+        if (count(headers_list()) > 0) {
+            throw EmitterException::forHeadersFromGlobal();
+        }
     }
 
     /**

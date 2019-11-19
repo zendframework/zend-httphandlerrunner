@@ -18,6 +18,11 @@ class EmitterException extends RuntimeException implements ExceptionInterface
         return new self('Unable to emit response; headers already sent');
     }
 
+    public static function forHeadersFromGlobal() : self
+    {
+        return new self('Some headers has been emitted previously; cannot emit response');
+    }
+
     public static function forOutputSent() : self
     {
         return new self('Output has been emitted previously; cannot emit response');
