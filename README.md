@@ -4,10 +4,6 @@
 >
 > This repository has moved to laminas/laminas-httphandlerrunner.
 
-> ## Repository abandoned 2019-12-31
->
-> This repository has moved to laminas/laminas-httphandlerrunner.
-
 [![Build Status](https://secure.travis-ci.org/zendframework/zend-httphandlerrunner.svg?branch=master)](https://secure.travis-ci.org/zendframework/zend-httphandlerrunner)
 [![Coverage Status](https://coveralls.io/repos/github/zendframework/zend-httphandlerrunner/badge.svg?branch=master)](https://coveralls.io/github/zendframework/zend-httphandlerrunner?branch=master)
 
